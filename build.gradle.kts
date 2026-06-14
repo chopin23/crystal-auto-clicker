@@ -4,8 +4,8 @@
     id("maven-publish")
 }
 
-group = providers.gradleProperty("maven_group")
-version = providers.gradleProperty("mod_version")
+group = "com.example"
+version = "1.0.0"
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 
 repositories {

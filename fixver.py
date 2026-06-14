@@ -1,0 +1,5 @@
+﻿content = open('build.gradle.kts', encoding='utf-8').read()
+content = content.replace('version = providers.gradleProperty("mod_version")', 'version = "1.0.0"')
+content = content.replace('group = providers.gradleProperty("maven_group")', 'group = "com.example"')
+open('build.gradle.kts', 'w', encoding='utf-8').write(content)
+print('Done')
