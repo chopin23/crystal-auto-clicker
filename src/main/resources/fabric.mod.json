@@ -1,0 +1,23 @@
+﻿{
+  "schemaVersion": 1,
+  "id": "crystalautoclicker",
+  "version": "\",
+  "name": "Crystal Auto Clicker",
+  "description": "Hold Right Shift -> place 3 end crystals/second",
+  "authors": ["You"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/crystalautoclicker/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.example.crystalautoclicker.CrystalAutoClicker"],
+    "client": ["com.example.crystalautoclicker.CrystalAutoClickerClient"]
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.16.9",
+    "minecraft": ">=1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
