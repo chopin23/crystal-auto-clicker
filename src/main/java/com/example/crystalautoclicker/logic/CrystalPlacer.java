@@ -1,4 +1,4 @@
-﻿package com.example.crystalautoclicker.logic;
+package com.example.crystalautoclicker.logic;
 
 import com.example.crystalautoclicker.config.CrystalConfig;
 import net.minecraft.block.Blocks;
@@ -23,11 +23,11 @@ public class CrystalPlacer {
         if (tickCounter++ % interval != 0) return;
 
         int crystalSlot = findCrystalSlot(player);
-        if (crystalSlot == -1 && CrystalConfig.requireCrystalInHand) return;
+        if (crystalSlot == -1 && CrystalConfig.REQUIRE_CRYSTAL_IN_HAND) return;
 
         Vec3d eyePos = player.getCameraPosVec(1.0f);
         Vec3d lookVec = player.getRotationVec(1.0f);
-        double maxDist = CrystalConfig.maxPlaceDistance;
+        double maxDist = CrystalConfig.MAX_PLACE_DISTANCE;
 
         BlockHitResult hit = world.raycast(new net.minecraft.world.RaycastContext(
             eyePos, eyePos.add(lookVec.multiply(maxDist)),
@@ -39,9 +39,9 @@ public class CrystalPlacer {
 
         BlockPos placePos = hit.getBlockPos().offset(hit.getSide());
         double dist = player.squaredDistanceTo(Vec3d.ofCenter(placePos));
-        if (dist < CrystalConfig.minPlaceDistance * CrystalConfig.minPlaceDistance) return;
+        if (dist < CrystalConfig.MIN_PLACE_DISTANCE * CrystalConfig.MIN_PLACE_DISTANCE) return;
 
-        if (!world.getBlockState(placePos).replace穩ble || !Blocks.END_CRYSTAL.getDefaultState().canPlaceAt(world, placePos)) return;
+        if (!world.getBlockState(placePos).isReplaceable()) return;
 
         int originalSlot = player.getInventory().selectedSlot;
         if (crystalSlot != -1 && crystalSlot != originalSlot && crystalSlot < 9) {

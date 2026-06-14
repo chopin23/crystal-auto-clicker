@@ -1,4 +1,4 @@
-﻿package com.example.crystalautoclicker.config;
+package com.example.crystalautoclicker.config;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -20,6 +20,11 @@ public class CrystalConfig implements ConfigData {
 
     @Comment("Require end crystal in hotbar/offhand to place")
     public boolean requireCrystalInHand = true;
+
+    public static boolean REQUIRE_CRYSTAL_IN_HAND = true;
+    public static double MIN_PLACE_DISTANCE = 1.5;
+    public static double MAX_PLACE_DISTANCE = 5.0;
+
 
     public static final String FILE_NAME = "crystalautoclicker";
     public static int CRYSTALS_PER_SECOND = 3;

@@ -6,25 +6,23 @@
 
 group = providers.gradleProperty("maven_group")
 version = providers.gradleProperty("mod_version")
-
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 
 repositories {
-    mainCentral()
+    mavenCentral()
     maven("https://maven.fabricmc.net/")
-    maven("https://maven.fabricmc.net/repository/")
+    maven("https://maven.shedaniel.me/")
+    maven("https://maven.terraformersmc.com/")
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:\")
-    mappings("net.fabricmc:yarn:\:v2")
-    modImplementation("net.fabricmc:fabric-loader:\")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:\")
-    modImplementation("me.shedaniel:cloth-config2:15.0.136")
-}
-
-loom {
-    mappingsLayer.add("nested")
+    minecraft("com.mojang:minecraft:1.21.1")
+    mappings("net.fabricmc:yarn:1.21.1+build.3:v2")
+    modImplementation("net.fabricmc:fabric-loader:0.16.9")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.102.0+1.21.1")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:13.0.121") {
+        exclude(group = "net.fabricmc.fabric-api")
+    }
 }
 
 tasks.withType<JavaCompile> {

@@ -1,7 +1,7 @@
 ﻿{
   "schemaVersion": 1,
   "id": "crystalautoclicker",
-  "version": "\",
+  "version": "1.0.0",
   "name": "Crystal Auto Clicker",
   "description": "Hold Right Shift -> place 3 end crystals/second",
   "authors": ["You"],

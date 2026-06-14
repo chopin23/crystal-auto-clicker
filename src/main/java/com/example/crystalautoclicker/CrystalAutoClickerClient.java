@@ -1,4 +1,4 @@
-﻿package com.example.crystalautoclicker;
+package com.example.crystalautoclicker;
 
 import com.example.crystalautoclicker.config.CrystalConfig;
 import com.example.crystalautoclicker.logic.CrystalPlacer;
