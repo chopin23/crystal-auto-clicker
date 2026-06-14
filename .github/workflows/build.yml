@@ -12,6 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # 🔧 [ย้ายมาตรงนี้] ล้างและดึงไฟล์ JAR ใหม่ตั้งแต่ก้าวแรก ก่อนที่ Gradle Action จะชิงพัง
+      - name: Ensure Valid Gradle Wrapper JAR
+        run: |
+          WRAPPER_DIR="gradle/wrapper"
+          WRAPPER_JAR="$WRAPPER_DIR/gradle-wrapper.jar"
+          WRAPPER_URL="https://services.gradle.org/distributions/gradle-8.8-wrapper.jar"
+
+          echo "🧹 Cleaning and downloading official Gradle Wrapper JAR..."
+          mkdir -p "$WRAPPER_DIR"
+          rm -f "$WRAPPER_JAR"
+          curl -fL -o "$WRAPPER_JAR" "$WRAPPER_URL"
+          echo "🚀 Verified Wrapper JAR: $(ls -lh $WRAPPER_JAR)"
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -21,21 +34,6 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-
-      - name: Ensure Valid Gradle Wrapper JAR
-        run: |
-          WRAPPER_DIR="gradle/wrapper"
-          WRAPPER_JAR="$WRAPPER_DIR/gradle-wrapper.jar"
-          WRAPPER_URL="https://services.gradle.org/distributions/gradle-8.8-wrapper.jar"
-
-          if [ ! -f "$WRAPPER_JAR" ] || ! jar tf "$WRAPPER_JAR" >/dev/null 2>&1; then
-            echo "⚠️ Detected missing or corrupted wrapper JAR. Downloading a fresh copy..."
-            mkdir -p "$WRAPPER_DIR"
-            curl -fL -o "$WRAPPER_JAR" "$WRAPPER_URL"
-            echo "🚀 Downloaded successfully: $(ls -lh $WRAPPER_JAR)"
-          else
-            echo "✨ Wrapper JAR configuration is valid."
-          fi
 
       - name: Build with Gradle
         run: chmod +x gradlew && ./gradlew build --no-daemon
