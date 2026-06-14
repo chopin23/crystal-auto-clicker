@@ -12,34 +12,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 🔧 สเตปที่ 1: ดึงเอา JDK 21 มาติดตั้งในระบบเตรียมไว้ก่อน
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: 21
 
-      # 🔧 สเตปที่ 2: ดาวน์โหลดและตรวจสอบไฟล์รันระบบของแท้ (รันก่อนสั่ง Build เสมอ)
-      - name: Ensure valid Gradle Wrapper JAR
+      - name: Force Download Valid Gradle Wrapper JAR
         run: |
-          WRAPPER_DIR="gradle/wrapper"
-          WRAPPER_JAR="$WRAPPER_DIR/gradle-wrapper.jar"
-          WRAPPER_URL="https://github.com/gradle/gradle/raw/v8.8.0/gradle/wrapper/gradle-wrapper.jar"
+          mkdir -p gradle/wrapper
+          rm -f gradle/wrapper/gradle-wrapper.jar
+          echo "⬇️ Downloading authentic gradle-wrapper.jar..."
+          curl -fL -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v8.8.0/gradle/wrapper/gradle-wrapper.jar
+          echo "✅ Done!"
 
-          mkdir -p "$WRAPPER_DIR"
-          
-          echo "⬇️ Downloading fresh and valid gradle-wrapper.jar from official release..."
-          rm -f "$WRAPPER_JAR"
-          curl -fL -o "$WRAPPER_JAR" "$WRAPPER_URL"
-          echo "✅ Downloaded successfully: $(ls -lh $WRAPPER_JAR)"
-
-      # 🔧 สเตปที่ 3: สั่งคอมไพล์โค้ดตรงๆ โดยไม่ผ่านปลั๊กอินเสริม เพื่อตัดปัญหาการชิงพัง
       - name: Build with Gradle
         run: |
           chmod +x gradlew
           ./gradlew build --no-daemon
 
-      # 🔧 สเตปที่ 4: รวบรวมไฟล์มอดที่เสร็จสมบูรณ์ส่งออกระบบ
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v4
         with:
